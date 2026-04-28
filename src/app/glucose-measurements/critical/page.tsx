@@ -5,8 +5,8 @@ import { verifySession } from "@/lib/auth";
 import GlucoseAnalysis from "@/components/glucose-critical";
 
 export const metadata: Metadata = {
-  title: "Анализ критических значений",
-  keywords: ["Анализ критических значений глюкозы", "Дневник диабетика"],
+  title: "График глюкозы",
+  keywords: ["График глюкозы", "Дневник диабетика"],
 };
 
 export default async function CriticalGlucoseValuesPage() {
@@ -16,10 +16,10 @@ export default async function CriticalGlucoseValuesPage() {
 
   return (
     <main
-      aria-label="Анализ критических значений глюкозы"
+      aria-label="График глюкозы"
       className={`flex flex-col w-full py-10`}
     >
-      <Headline text="Анализ значений глюкозы" />
+      <Headline text="График глюкозы" />
       <div className="w-full x-spacing">
         <GlucoseAnalysis userId={userId}/>
       </div>

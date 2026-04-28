@@ -52,7 +52,9 @@ export default function GlucoseAnalysis({userId}:{userId:number}) {
       {error && <div className="text-red-500 py-4">{error}</div>}
 
       {!loading && glucoseData.length > 0 && (
-        <GlucoseChart data={glucoseData} startDate={startDate} endDate={endDate} />
+        <div className='w-full overflow-x-hidden'>
+          <GlucoseChart data={glucoseData} />
+        </div>
       ) }
         {!loading && !error && glucoseData.length === 0 && (
           <div className=" text-gray-500">

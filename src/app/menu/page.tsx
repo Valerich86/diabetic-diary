@@ -8,7 +8,6 @@ import ExtraMenu from "@/components/UI/extra-menu";
 import { FaClipboardList, FaChartLine } from "react-icons/fa";
 import { GiHotMeal, GiLoveInjection } from "react-icons/gi";
 import { LiaThermometerSolid } from "react-icons/lia";
-import React from "react";
 
 export const metadata: Metadata = {
   title: "Сегодня",
@@ -33,7 +32,7 @@ const buttons = [
     Icon: LiaThermometerSolid,
   },
   {
-    name: "Анализ показателей",
+    name: "График глюкозы",
     href: "/glucose-measurements/critical",
     Icon: FaChartLine,
   },

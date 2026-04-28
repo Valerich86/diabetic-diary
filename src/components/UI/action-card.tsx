@@ -2,6 +2,8 @@
 
 import { AiFillDelete } from "react-icons/ai";
 import type { Action } from "@/lib/types";
+import { GiHotMeal, GiLoveInjection } from "react-icons/gi";
+import { LiaThermometerSolid } from "react-icons/lia";
 
 interface Props {
   act: Action;
@@ -39,20 +41,23 @@ export default function ActionCard({ act, refresh, setRefresh }: Props) {
         ${isRedZone ? "bg-red-100" : "bg-secondary-light-blue"}`}
     >
       <button
-        className={
-          `absolute bottom-1 right-1 p-1 rounded-full bg-gray-500 text-primary-milk
-          hover:opacity-80 cursor-pointer`
-        }
+        className={`absolute -bottom-1 -right-1 p-1 rounded-full bg-gray-500 text-primary-milk
+          hover:opacity-80 cursor-pointer`}
         onClick={handleDelete}
       >
         <AiFillDelete />
       </button>
       <div
-        className={`flex gap-2 text-primary-milk p-3 rounded-t-2xl
-          ${isRedZone ? "bg-accent-red" : "bg-secondary-blue"}`}
+        className={`flex justify-between items-center text-primary-milk p-3 
+          ${isRedZone ? "bg-accent-red" : "bg-secondary-blue"} rounded-t-2xl`}
       >
-        <strong>{act.time.substring(0, 5)}</strong>
-        <strong>{act.record_type}</strong>
+        <div className="flex gap-2 items-center">
+          <strong>{act.time.substring(0, 5)}</strong>
+          <strong>{act.record_type}</strong>
+        </div>
+        {act.record_type === "Приём пищи" && <GiHotMeal size={20}/>}
+        {act.record_type === "Инъекция инсулина" && <GiLoveInjection size={20}/>}
+        {act.record_type === "Измерение глюкозы" && <LiaThermometerSolid size={20}/>}
       </div>
       <div className="p-3 rounded-b-2xl flex flex-col">
         {act.record_type === "Приём пищи" && (

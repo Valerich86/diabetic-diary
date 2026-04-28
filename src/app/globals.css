@@ -12,8 +12,8 @@ h2 {
 }
 
 @theme {
-  --animate-logo: logo 10s;
-  --animate-bg: bg 10s;
+  --animate-logo: logo 15s ease-in;
+  --animate-bg: bg 15s ease-in;
 
   @keyframes logo {
     0%{
@@ -25,11 +25,11 @@ h2 {
   }
 
   @keyframes bg {
-    0%{
-      transform: scaleY(1.10);
+    0%, {
+      transform: scaleY(1.2) rotate(1deg);
     }
     100% {
-      transform: scaleY(1);
+      transform: scaleY(1) rotate(0);
     }
   }
 
@@ -37,6 +37,7 @@ h2 {
   --color-secondary-violet: #7B37DC;
   --color-secondary-blue: #158AEA;
   --color-secondary-light-blue: #B4E8F5;
+  --color-secondary-light-yellow: #FAF0CB;
   --color-accent-yellow: #F1D323;
   --color-accent-red: #CE1F26;
 }
@@ -46,7 +47,7 @@ h2 {
 }
 
 .button {
-  @apply w-full py-2 rounded-full text-primary-milk text-center font-bold border hover:opacity-90 active:scale-99 cursor-pointer;
+  @apply w-full p-2 rounded-full text-primary-milk text-center font-bold border hover:opacity-90 active:scale-99 cursor-pointer;
 }
 
 .label {
