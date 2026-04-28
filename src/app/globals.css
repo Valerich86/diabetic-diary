@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+p,
+span,
+pre,
+h1,
+h2 {
+  text-wrap: initial;
+  caret-color: transparent;
+  user-select: none;
+  outline: none;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --animate-logo: logo 10s;
+  --animate-bg: bg 10s;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes logo {
+    0%{
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
+
+  @keyframes bg {
+    0%{
+      transform: scaleY(1.10);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+
+  --color-primary-milk: #FAF9F5;
+  --color-secondary-violet: #7B37DC;
+  --color-secondary-blue: #158AEA;
+  --color-secondary-light-blue: #B4E8F5;
+  --color-accent-yellow: #F1D323;
+  --color-accent-red: #CE1F26;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.x-spacing {
+  @apply px-5 lg:px-25;
+}
+
+.button {
+  @apply w-full py-2 rounded-full text-primary-milk text-center font-bold border hover:opacity-90 active:scale-99 cursor-pointer;
+}
+
+.label {
+  @apply text-sm;
+}
+
+.input {
+  @apply w-full rounded-md p-2 text-sm outline-none border border-secondary-blue placeholder:text-gray-500/50 focus:shadow-[0px_0px_30px_5px_rgba(21,138,234,0.3)];
 }
