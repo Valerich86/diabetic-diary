@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitEvent, useState } from "react";
+import { SubmitEvent, useState, useEffect, InputEvent } from "react";
 import { redirect } from "next/navigation";
 import FormError from "../UI/form-error";
 import { InsulinInjectionFormErrors } from "@/lib/types";
@@ -15,7 +15,7 @@ interface InjectionData {
   user_id: number;
   injection_date: string;
   injection_time: string;
-  amount?: number;
+  amount: number|undefined;
   comment: string;
 }
 
@@ -31,6 +31,10 @@ export default function InsulinInjectionForm({ userId }: Props) {
     undefined,
   );
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (form.amount === 0) setForm({...form, amount: undefined});
+  }, [form.amount]);
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -50,6 +54,8 @@ export default function InsulinInjectionForm({ userId }: Props) {
     }
     setIsLoading(false);
   }
+
+  const onAmountChange = (e: InputEvent<HTMLInputElement>) => {};
 
   return (
     <form
@@ -87,7 +93,8 @@ export default function InsulinInjectionForm({ userId }: Props) {
             onChange={(e) =>
               setForm({
                 ...form,
-                injection_time: getFormattedDateTime(undefined, e.target.value).fTime,
+                injection_time: getFormattedDateTime(undefined, e.target.value)
+                  .fTime,
               })
             }
           />
@@ -96,17 +103,17 @@ export default function InsulinInjectionForm({ userId }: Props) {
 
       {/* количество */}
       <fieldset>
-          <label className="label">Количество единиц</label>
-          <input
-            className="input"
-            type="number"
-            min={1}
-            value={form.amount}
-            onChange={(e) =>
-              setForm({ ...form, amount: Number(e.target.value) })
-            }
-          />
-        </fieldset>
+        <label className="label">Количество единиц</label>
+        <input
+          className="input"
+          type="number"
+          min={1}
+          value={form.amount}
+          onChange={(e) => {
+            setForm({ ...form, amount: Number(e.target.value) });
+          }}
+        />
+      </fieldset>
 
       {/* комментарий */}
       <fieldset>

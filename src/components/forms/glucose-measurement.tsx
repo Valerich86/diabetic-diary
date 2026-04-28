@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitEvent, useState } from "react";
+import { SubmitEvent, useState, useEffect } from "react";
 import { redirect } from "next/navigation";
 import FormError from "../UI/form-error";
 import { GlucoseMeasurementFormErrors } from "@/lib/types";
@@ -15,7 +15,7 @@ interface MeasurementData {
   user_id: number;
   measurement_date: string;
   measurement_time: string;
-  amount?: number;
+  amount: number|undefined;
   comment: string;
 }
 
@@ -31,6 +31,10 @@ export default function GlucoseMeasurementForm({ userId }: Props) {
     undefined,
   );
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+      if (form.amount === 0) setForm({...form, amount: undefined});
+    }, [form.amount]);
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
