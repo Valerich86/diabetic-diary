@@ -49,6 +49,7 @@ export type GlucoseMeasurement = {
   time: string;
   amount: number;
   comment: string;
+  high_amount_count: number;
 }
 
 export type Action = {

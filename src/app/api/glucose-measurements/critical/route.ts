@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
         time,
         amount,
         comment,
-        created_at
+        COUNT(CASE WHEN amount > 10 THEN 1 END) OVER () AS high_amount_count
       FROM glucose_measurements
       WHERE user_id = $1
         AND date >= $2

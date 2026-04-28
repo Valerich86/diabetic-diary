@@ -14,19 +14,7 @@ import {
   ReferenceArea,
 } from "recharts";
 import { font_headline } from "@/lib/fonts";
-
-interface GlucoseRecord {
-  id: number;
-  date: string;
-  time: string;
-  amount: number;
-  comment: string | null;
-  created_at: string;
-}
-
-interface GlucoseChartProps {
-  data: GlucoseRecord[];
-}
+import type { GlucoseMeasurement } from "@/lib/types";
 
 const RANGE_NORMAL = { min: 3, max: 7 };
 const RANGE_UNSATISFACTORY = { min: 7, max: 10 };
@@ -34,7 +22,7 @@ const RANGE_CRITICAL = { below: 3, above: 10 };
 
 export default function GlucoseChart({
   data,
-}: GlucoseChartProps) {
+}: {data: GlucoseMeasurement[]}) {
   const router = useRouter();
   const chartWidth = `${data.length * 100}px`;
 
