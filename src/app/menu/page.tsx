@@ -5,6 +5,10 @@ import Headline from "@/components/UI/headline";
 import { verifySession } from "@/lib/auth";
 import { getFormattedDateTime } from "@/lib/time-date-formatter";
 import ExtraMenu from "@/components/UI/extra-menu";
+import { FaClipboardList, FaChartLine } from "react-icons/fa";
+import { GiHotMeal, GiLoveInjection } from "react-icons/gi";
+import { LiaThermometerSolid } from "react-icons/lia";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Сегодня",
@@ -12,11 +16,27 @@ export const metadata: Metadata = {
 };
 
 const buttons = [
-  {name: "Смотреть записи", href: `/daily-records?startDate=${getFormattedDateTime().fDate}&endDate=${getFormattedDateTime().fDate}`},
-  {name: "Записать приём пищи", href: "/food-intakes/add"},
-  {name: "Записать инъекцию", href: "/insulin-injections/add"},
-  {name: "Записать значение глюкозы", href: "/glucose-measurements/add"},
-  {name: "Анализ показателей", href: "/glucose-measurements/critical"},
+  {
+    name: "Смотреть записи",
+    href: `/daily-records?startDate=${getFormattedDateTime().fDate}&endDate=${getFormattedDateTime().fDate}`,
+    Icon: FaClipboardList,
+  },
+  { name: "Записать приём пищи", href: "/food-intakes/add", Icon: GiHotMeal },
+  {
+    name: "Записать инъекцию",
+    href: "/insulin-injections/add",
+    Icon: GiLoveInjection,
+  },
+  {
+    name: "Записать значение глюкозы",
+    href: "/glucose-measurements/add",
+    Icon: LiaThermometerSolid,
+  },
+  {
+    name: "Анализ показателей",
+    href: "/glucose-measurements/critical",
+    Icon: FaChartLine,
+  },
 ];
 
 export default async function MenuPage() {
@@ -30,16 +50,20 @@ export default async function MenuPage() {
       aria-label="main menu"
       className={`w-full min-h-screen flex flex-col items-center py-10 relative overflow-x-hidden`}
     >
-      <ExtraMenu userId={userId}/>
-      <Headline text={`${userName}, ${new Date().toLocaleDateString()}`}/>
+      <ExtraMenu userId={userId} />
+      <Headline text={`${userName}, ${new Date().toLocaleDateString()}`} />
       <div className="flex flex-col gap-10 items-center w-full lg:w-1/2 mt-10 x-spacing">
-        {buttons.map((item, index) => (
-        <Link href={item.href} key={index} className="w-full">
-          <div className="bg-secondary-blue shadow-[0px_0px_5px_0px_#158AEA] button">
-            {item.name}
-          </div>
-        </Link>
-      ))}
+        {buttons.map((item, index) => {
+          const { Icon, ...rest } = item;
+          return(
+          <Link href={item.href} key={index} className="w-full">
+            <div className="bg-secondary-blue shadow-[0px_0px_5px_0px_#158AEA] flex justify-center gap-3 items-center button">
+              {Icon && <Icon size={20}/>}
+              {item.name}
+            </div>
+          </Link>
+        )
+        })}
       </div>
     </main>
   );
