@@ -12,8 +12,8 @@ h2 {
 }
 
 @theme {
-  --animate-logo: logo 15s ease-in;
-  --animate-bg: bg 15s ease-in;
+  --animate-logo: logo 15s;
+  --animate-bg: bg 15s;
 
   @keyframes logo {
     0%{
@@ -25,11 +25,11 @@ h2 {
   }
 
   @keyframes bg {
-    0%, {
-      transform: scaleY(1.2) rotate(1deg);
+    0% {
+      transform: scaleY(1.1);
     }
     100% {
-      transform: scaleY(1) rotate(0);
+      transform: scaleY(1);
     }
   }
 
