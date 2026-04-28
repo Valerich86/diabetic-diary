@@ -11,12 +11,20 @@ interface Props {
   userId: number;
 }
 
+interface InjectionData {
+  user_id: number;
+  injection_date: string;
+  injection_time: string;
+  amount?: number;
+  comment: string;
+}
+
 export default function InsulinInjectionForm({ userId }: Props) {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<InjectionData>({
     user_id: userId,
     injection_date: getFormattedDateTime().fDate,
     injection_time: getFormattedDateTime().fTime,
-    amount: 1,
+    amount: undefined,
     comment: "",
   });
   const [errors, setErrors] = useState<InsulinInjectionFormErrors | undefined>(

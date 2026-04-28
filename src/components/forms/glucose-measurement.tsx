@@ -11,12 +11,20 @@ interface Props {
   userId: number;
 }
 
+interface MeasurementData {
+  user_id: number;
+  measurement_date: string;
+  measurement_time: string;
+  amount?: number;
+  comment: string;
+}
+
 export default function GlucoseMeasurementForm({ userId }: Props) {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<MeasurementData>({
     user_id: userId,
     measurement_date: getFormattedDateTime().fDate,
     measurement_time: getFormattedDateTime().fTime,
-    amount: 1,
+    amount: undefined,
     comment: "",
   });
   const [errors, setErrors] = useState<GlucoseMeasurementFormErrors | undefined>(
