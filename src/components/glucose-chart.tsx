@@ -55,7 +55,7 @@ export default function GlucoseChart({
 
     const labels = sortedData.map(
       (record) =>
-        `${new Date(record.date).toLocaleDateString()} ${record.time.substring(0, 5)}`,
+        `${new Date(record.date).toLocaleDateString('ru-RU')} ${record.time.substring(0, 5)}`,
     );
     const values = sortedData.map((record) => record.amount);
 

@@ -51,7 +51,7 @@ export default async function MenuPage() {
       className={`w-full min-h-screen flex flex-col items-center py-10 relative overflow-x-hidden`}
     >
       <ExtraMenu userId={userId} />
-      <Headline text={`${userName}, ${new Date().toLocaleDateString()}`} />
+      <Headline text={`${userName}, ${new Date().toLocaleDateString('ru-RU')}`} />
       <div className="flex flex-col gap-10 items-center w-full lg:w-1/2 mt-10 x-spacing">
         {buttons.map((item, index) => {
           const { Icon, ...rest } = item;

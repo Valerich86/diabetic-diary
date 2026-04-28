@@ -52,7 +52,7 @@ export function ActionList({ userId, begin, end }:Props) {
         {actions.length > 0 &&
           actions.map((item, index) => (
             <div key={index} className="w-full">
-              <strong className="text-lg font-extrabold">{new Date(item.date).toLocaleDateString()}</strong>
+              <strong className="text-lg font-extrabold">{new Date(item.date).toLocaleDateString('ru-RU')}</strong>
               <div className="border"></div>
               <div className="w-full flex flex-col gap-5 mt-5">
                 {item.daily_records.map((record, index) => (
