@@ -102,8 +102,8 @@ export default function GlucoseChart({ data }: { data: GlucoseMeasurement[] }) {
     const currentPayload = payloadRef.current;
     if (!currentPayload?.date) return;
     const targetDate = currentPayload.date.split("T")[0];
-    console.log('Ref date:', targetDate);
     const url = `/daily-records?startDate=${targetDate}&endDate=${targetDate}`;
+    router.prefetch(url);
     router.push(url);
   };
 
@@ -130,9 +130,9 @@ export default function GlucoseChart({ data }: { data: GlucoseMeasurement[] }) {
 };
 
   return (
-    <div className="w-full min-h-[70vh] overflow-x-auto border border-secondary-blue bg-primary-milk rounded-xl">
+    <div className="w-full min-h-[70vh] overflow-x-auto border border-secondary-blue bg-primary-milk rounded-xl outline-none">
       <div
-        className={`${font_headline.className}`}
+        className={`${font_headline.className} outline-none`}
         style={{ minWidth: chartWidth }}
       >
         <ResponsiveContainer width="100%" height={500}>
@@ -199,7 +199,8 @@ export default function GlucoseChart({ data }: { data: GlucoseMeasurement[] }) {
               fill="url(#colorAmount)"
               strokeWidth={3}
               dot={<CustomPoint />}
-              activeDot={false}
+              activeDot={true}
+              isAnimationActive={false}
             />
           </LineChart>
         </ResponsiveContainer>
