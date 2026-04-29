@@ -17,7 +17,7 @@ export default async function AddFoodIntakePage() {
   return (
     <main
       aria-label="страница добавления приёма пищи"
-      className={`flex flex-col w-full py-10`}
+      className={`flex flex-col w-full my-15`}
     >
       <Headline text="Добавление приёма пищи" />
       <div className="w-full x-spacing">

@@ -24,7 +24,7 @@ export default async function OneDayInfoPage({
   return (
     <main
       aria-label="Ваши записи"
-      className={`w-full min-h-screen py-10`}
+      className={`w-full min-h-screen my-15`}
     >
       <Headline text={`Ваши записи`} />
       <ActionList userId={userId} begin={startDate} end={endDate}/>

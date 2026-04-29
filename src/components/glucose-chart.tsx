@@ -165,7 +165,7 @@ export default function GlucoseChart({ data }: { data: GlucoseMeasurement[] }) {
               }}
               height={60}
               interval={0}
-              padding={{ left: 10, right: 10 }}
+              padding={{ right: 20 }}
               style={{ fill: "black", fontWeight: "bolder", fontSize: 12 }}
             />
             <YAxis

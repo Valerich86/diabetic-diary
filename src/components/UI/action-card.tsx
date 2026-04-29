@@ -11,22 +11,17 @@ interface Props {
   setRefresh: (refresh: boolean) => void;
 }
 
+const iconStyle =
+  "w-7 h-7 rounded-full flex justify-center items-center";
+
 export default function ActionCard({ act, refresh, setRefresh }: Props) {
-  const iconBg =
+  const isRedZone =
     act.record_type === "Измерение глюкозы" &&
-    (Number(act.detail) > 10 || Number(act.detail) <= 3)
-      ? "red"
-      : (act.record_type === "Измерение глюкозы" &&
-            Number(act.detail) <= 10 &&
-            Number(act.detail) > 7) ||
-          Number(act.detail) <= 4
-        ? "yellow"
-        : act.record_type === "Измерение глюкозы" &&
-            Number(act.detail) <= 7 &&
-            Number(act.detail) > 4
-          ? "green"
-          : act.record_type !== "Измерение глюкозы" 
-          ? "default" : "";
+    (Number(act.detail) >= 10 || Number(act.detail) <= 3);
+  const isYellowZone =
+    act.record_type === "Измерение глюкозы" &&
+    Number(act.detail) < 10 &&
+    Number(act.detail) > 7;
 
   const handleDelete = async () => {
     const url =
@@ -61,19 +56,23 @@ export default function ActionCard({ act, refresh, setRefresh }: Props) {
           <strong>{act.time.substring(0, 5)}</strong>
           <strong>{act.record_type}</strong>
         </div>
-        <div
-          className={
-            `w-7 h-7 rounded-full flex justify-center items-center 
-            ${iconBg === "red" ? "bg-accent-red text-primary-milk" 
-              : iconBg === "yellow" ? "bg-accent-yellow text-secondary-blue" 
-              : iconBg === "green" ? "bg-green-500 text-primary-milk" 
-              : iconBg === "default" ? "bg-primary-milk text-secondary-blue" : ""}`
-            }
-        >
-          {act.record_type === "Приём пищи" && <GiHotMeal />}
-          {act.record_type === "Инъекция инсулина" && <GiLoveInjection />}
-          {act.record_type === "Измерение глюкозы" && <LiaThermometerSolid />}
-        </div>
+        {act.record_type === "Приём пищи" && (
+          <div className={`${iconStyle} bg-primary-milk text-secondary-blue`}>
+            <GiHotMeal />{" "}
+          </div>
+        )}
+        {act.record_type === "Инъекция инсулина" && (
+          <div className={`${iconStyle} bg-primary-milk text-secondary-blue`}>
+            <GiLoveInjection />
+          </div>
+        )}
+        {act.record_type === "Измерение глюкозы" && (
+          <div
+            className={`${iconStyle} ${isRedZone ? "bg-accent-red" : isYellowZone ? "bg-accent-yellow text-secondary-blue" : "bg-green-500"}`}
+          >
+            <LiaThermometerSolid />
+          </div>
+        )}
       </div>
       <div className="p-3 rounded-b-2xl flex flex-col">
         {act.record_type === "Приём пищи" && (

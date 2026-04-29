@@ -7,18 +7,12 @@ export default function BackButton() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleBack = () => {
-    // router.refresh();
-    router.back()
-    // setTimeout(() => router.back(), 50);
-  };
-
   return (
     <>
       {pathname !== "/" && pathname !== "/menu" && (
         <button
           className="z-40 text-primary-milk hover:opacity-90 cursor-pointer"
-          onClick={handleBack}
+          onClick={() => router.back()}
         >
           <ImArrowLeft size={20}/>
         </button>

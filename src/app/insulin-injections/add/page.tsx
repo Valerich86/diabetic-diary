@@ -17,7 +17,7 @@ export default async function AddInsulinPage() {
   return (
     <main
       aria-label="страница добавления инсулина"
-      className={`flex flex-col w-full py-10`}
+      className={`flex flex-col w-full my-15`}
     >
       <Headline text="Добавление инъекции инсулина" />
       <div className="w-full x-spacing">

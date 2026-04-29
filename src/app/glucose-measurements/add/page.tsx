@@ -17,7 +17,7 @@ export default async function AddGlucoseMeasurementPage() {
   return (
     <main
       aria-label="страница измерения глюкозы"
-      className={`flex flex-col w-full py-10`}
+      className={`flex flex-col w-full my-15`}
     >
       <Headline text="Добавление значения глюкозы" />
       <div className="w-full x-spacing">

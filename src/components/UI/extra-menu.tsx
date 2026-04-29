@@ -75,13 +75,13 @@ export default function ExtraMenu({ userId }: { userId: number }) {
     <>
       <div
         ref={iconRef}
-        className="absolute top-14 right-5 lg:right-25 text-primary-milk"
+        className="absolute z-60 top-4 opacity-70 right-5 lg:right-25 text-primary-milk"
       >
         <button
-          className="hover:opacity-90"
+          className="hover:opacity-90 cursor-pointer"
           onClick={() => setIsOpened(isOpened ? false : true)}
         >
-          <FaUserCog size={23} />
+          <FaUserCog size={20} />
         </button>
       </div>
       <AnimatePresence>
@@ -99,7 +99,7 @@ export default function ExtraMenu({ userId }: { userId: number }) {
               handleSwipe(swipeDistance);
             }}
             aria-label="меню профиля"
-            className={`py-5 px-5 h-[80vh] w-50 rounded-l-xl absolute right-0 top-25 z-50 bg-secondary-violet text-primary-milk
+            className={`py-5 px-5 h-[80vh] w-50 rounded-l-xl absolute right-0 top-15 z-50 bg-secondary-violet text-primary-milk
               shadow-[0px_0px_30px_25px_#7B37DC50] flex flex-col gap-5`}
           >
             {buttons.map((option, index) => (

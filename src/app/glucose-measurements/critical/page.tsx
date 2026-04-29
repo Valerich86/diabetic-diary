@@ -17,7 +17,7 @@ export default async function CriticalGlucoseValuesPage() {
   return (
     <main
       aria-label="График глюкозы"
-      className={`flex flex-col w-full py-10`}
+      className={`flex flex-col w-full my-15`}
     >
       <Headline text="График глюкозы" />
       <div className="w-full x-spacing">
