@@ -15,7 +15,7 @@ interface MeasurementData {
   user_id: number;
   measurement_date: string;
   measurement_time: string;
-  amount: number|undefined;
+  amount: number | undefined;
   comment: string;
 }
 
@@ -27,14 +27,14 @@ export default function GlucoseMeasurementForm({ userId }: Props) {
     amount: undefined,
     comment: "",
   });
-  const [errors, setErrors] = useState<GlucoseMeasurementFormErrors | undefined>(
-    undefined,
-  );
+  const [errors, setErrors] = useState<
+    GlucoseMeasurementFormErrors | undefined
+  >(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-      if (form.amount === 0) setForm({...form, amount: undefined});
-    }, [form.amount]);
+  // useEffect(() => {
+  //   if (form.amount === 0) setForm({ ...form, amount: undefined });
+  // }, [form.amount]);
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -91,7 +91,10 @@ export default function GlucoseMeasurementForm({ userId }: Props) {
             onChange={(e) =>
               setForm({
                 ...form,
-                measurement_time: getFormattedDateTime(undefined, e.target.value).fTime,
+                measurement_time: getFormattedDateTime(
+                  undefined,
+                  e.target.value,
+                ).fTime,
               })
             }
           />
@@ -100,18 +103,23 @@ export default function GlucoseMeasurementForm({ userId }: Props) {
 
       {/* количество */}
       <fieldset>
-          <label className="label">Количество ммоль</label>
-          <input
-            className="input"
-            type="number"
-            step={0.1}
-            min={1}
-            value={form.amount}
-            onChange={(e) =>
-              setForm({ ...form, amount: Number(e.target.value) })
+        <label className="label">Количество ммоль</label>
+        <input
+          className="input"
+          type="number"
+          min={0}
+          step={0.1}
+          value={form.amount ?? ""}
+          onChange={(e) => {
+            const value = Number(e.target.value);
+            if (value === 0) {
+              setForm({ ...form, amount: undefined }); // очищаем
+              return;
             }
-          />
-        </fieldset>
+            setForm({ ...form, amount: value });
+          }}
+        />
+      </fieldset>
 
       {/* комментарий */}
       <fieldset>

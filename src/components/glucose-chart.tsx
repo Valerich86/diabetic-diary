@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { getFormattedDateTime } from "@/lib/time-date-formatter";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import {
   LineChart,
@@ -16,15 +16,25 @@ import {
 import { font_headline } from "@/lib/fonts";
 import type { GlucoseMeasurement } from "@/lib/types";
 
-const RANGE_NORMAL = { min: 3, max: 7 };
+const RANGE_NORMAL = { min: 4, max: 7 };
 const RANGE_UNSATISFACTORY = { min: 7, max: 10 };
 const RANGE_CRITICAL = { below: 3, above: 10 };
 
-export default function GlucoseChart({
-  data,
-}: {data: GlucoseMeasurement[]}) {
-  const router = useRouter();
-  const chartWidth = `${data.length * 100}px`;
+export default function GlucoseChart({ data }: { data: GlucoseMeasurement[] }) {
+  const k = window.innerWidth > 400 ? 5 : 20;
+  const [chartWidth, setChartWidth] = useState(`${data.length * k}vw`);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const k = window.innerWidth > 400 ? 5 : 20;
+      setChartWidth(`${data.length * k}vw`);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Очистка при размонтировании компонента
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Сортируем данные по дате
   const sortedData = [...data].sort((a, b) => {
@@ -56,19 +66,19 @@ export default function GlucoseChart({
       y1: RANGE_CRITICAL.below,
       y2: RANGE_NORMAL.min,
       color: "#F1D323",
-      opacity: 0.2,
+      opacity: 0.3,
     },
     {
       y1: RANGE_NORMAL.min,
       y2: RANGE_NORMAL.max,
       color: "#27F53C",
-      opacity: 0.15,
+      opacity: 0.7,
     },
     {
       y1: RANGE_NORMAL.max,
       y2: RANGE_UNSATISFACTORY.max,
       color: "#F1D323",
-      opacity: 0.2,
+      opacity: 0.3,
     },
     {
       y1: RANGE_UNSATISFACTORY.max,
@@ -81,32 +91,50 @@ export default function GlucoseChart({
   const yTicks = Array.from({ length: maxY - 1 }, (_, i) => i);
 
   const CustomPoint = ({ cx, cy, payload, index }: any) => {
-    const router = useRouter();
+  const router = useRouter();
+  const payloadRef = useRef(payload);
 
-    const handleClick = () => {
-      if (!payload?.date) return;
-      const targetDate = payload.date.split("T")[0];
-      const url = `/daily-records?startDate=${targetDate}&endDate=${targetDate}`;
-      router.push(url);
-    };
+  useEffect(() => {
+    payloadRef.current = payload;
+  }, [payload]);
 
-    return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={6}
-        fill="#CE1F26"
-        stroke="white"
-        strokeWidth={2}
-        onClick={handleClick}
-        style={{ cursor: "pointer" }}
-      />
-    );
+  const handleClick = () => {
+    const currentPayload = payloadRef.current;
+    if (!currentPayload?.date) return;
+    const targetDate = currentPayload.date.split("T")[0];
+    console.log('Ref date:', targetDate);
+    const url = `/daily-records?startDate=${targetDate}&endDate=${targetDate}`;
+    router.push(url);
   };
 
   return (
+    <circle
+      key={`point-${index}-${payload.date}`}
+      cx={cx}
+      cy={cy}
+      r={15}
+      fill={
+        payload.amount > 4 && payload.amount <= 7
+          ? "#27F53C"
+          : (payload.amount > 7 && payload.amount <= 10) ||
+              (payload.amount > 3 && payload.amount <= 4)
+            ? "#F1D323"
+            : "#CE1F26"
+      }
+      stroke="white"
+      strokeWidth={2}
+      onClick={handleClick}
+      style={{ cursor: "pointer" }}
+    />
+  );
+};
+
+  return (
     <div className="w-full min-h-[70vh] overflow-x-auto border border-secondary-blue bg-primary-milk rounded-xl">
-      <div className={`${font_headline.className}`} style={{ minWidth: chartWidth }}>
+      <div
+        className={`${font_headline.className}`}
+        style={{ minWidth: chartWidth }}
+      >
         <ResponsiveContainer width="100%" height={500}>
           <LineChart
             data={formattedData}
@@ -118,31 +146,43 @@ export default function GlucoseChart({
                 key={index}
                 y1={zone.y1}
                 y2={zone.y2}
-                stroke="none"
+                stroke={"white"}
+                strokeWidth={0.5}
                 fill={zone.color}
-                fillOpacity={zone.opacity}
+                fillOpacity={0.3}
               />
             ))}
 
-            <CartesianGrid stroke="#f5f5f5" />
+            <CartesianGrid stroke="white" />
             <XAxis
               dataKey="label"
-              tick={{ angle: -60, textAnchor: "end", fontSize: 12, fill: "#DC2626", fontWeight: "bolder" }}
+              tick={{
+                angle: -60,
+                textAnchor: "end",
+                fontSize: 12,
+                fill: "#DC2626",
+                fontWeight: "bolder",
+              }}
               height={60}
               interval={0}
               padding={{ left: 10, right: 10 }}
-              style={{fill: "black", fontWeight: "bolder", fontSize: 12}}
+              style={{ fill: "black", fontWeight: "bolder", fontSize: 12 }}
             />
             <YAxis
               label={{
                 value: "Уровень глюкозы (ммоль/л)",
                 angle: -90,
                 position: "insideLeft",
-                style: { textAnchor: "middle", fill: "#DC2626", fontWeight: "bolder", fontSize: 16 },
+                style: {
+                  textAnchor: "middle",
+                  fill: "#DC2626",
+                  fontWeight: "bolder",
+                  fontSize: 16,
+                },
               }}
               interval={1}
               domain={[0, maxY]}
-              tick={{fill: "#DC2626", fontWeight: "bolder", fontSize: 12}}
+              tick={{ fill: "#DC2626", fontWeight: "bolder", fontSize: 12 }}
               ticks={yTicks}
             />
             <Tooltip
@@ -157,7 +197,7 @@ export default function GlucoseChart({
               dataKey="amount"
               stroke="#CE1F26"
               fill="url(#colorAmount)"
-              strokeWidth={2}
+              strokeWidth={3}
               dot={<CustomPoint />}
               activeDot={false}
             />

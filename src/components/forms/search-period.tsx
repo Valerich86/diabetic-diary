@@ -22,7 +22,7 @@ export default function SearchPeriod({
         <input
           className="input"
           type="date"
-          max={getFormattedDateTime().fDate}
+          max={endDate}
           value={startDate}
           onChange={(e) =>
             setStartDate(getFormattedDateTime(e.target.value).fDate)

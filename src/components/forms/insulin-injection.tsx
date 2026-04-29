@@ -108,9 +108,14 @@ export default function InsulinInjectionForm({ userId }: Props) {
           className="input"
           type="number"
           min={1}
-          value={form.amount}
+          value={form.amount ?? ""}
           onChange={(e) => {
-            setForm({ ...form, amount: Number(e.target.value) });
+            const value = Number(e.target.value);
+            if (value === 0) {
+              setForm({ ...form, amount: undefined }); // очищаем
+              return;
+            }
+            setForm({ ...form, amount: value });
           }}
         />
       </fieldset>
