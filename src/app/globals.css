@@ -55,5 +55,5 @@ h2 {
 }
 
 .input {
-  @apply w-full rounded-md p-2 text-sm outline-none border border-secondary-blue placeholder:text-gray-500/50 focus:shadow-[0px_0px_30px_5px_rgba(21,138,234,0.3)];
+  @apply w-full rounded-md p-2 text-sm outline-none border border-secondary-blue bg-primary-milk placeholder:text-gray-500/50 focus:shadow-[0px_3px_3px_0px_rgba(70,130,180,0.3)] focus:scale-101 duration-200;
 }

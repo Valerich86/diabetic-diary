@@ -12,13 +12,21 @@ interface Props {
 }
 
 export default function ActionCard({ act, refresh, setRefresh }: Props) {
-  const isRedZone =
+  const iconBg =
     act.record_type === "Измерение глюкозы" &&
-    (Number(act.detail) >= 10 || Number(act.detail) <= 3);
-  const isYellowZone =
-    act.record_type === "Измерение глюкозы" &&
-    Number(act.detail) < 10 &&
-    Number(act.detail) > 7;
+    (Number(act.detail) > 10 || Number(act.detail) <= 3)
+      ? "red"
+      : (act.record_type === "Измерение глюкозы" &&
+            Number(act.detail) <= 10 &&
+            Number(act.detail) > 7) ||
+          Number(act.detail) <= 4
+        ? "yellow"
+        : act.record_type === "Измерение глюкозы" &&
+            Number(act.detail) <= 7 &&
+            Number(act.detail) > 4
+          ? "green"
+          : act.record_type !== "Измерение глюкозы" 
+          ? "default" : "";
 
   const handleDelete = async () => {
     const url =
@@ -37,8 +45,7 @@ export default function ActionCard({ act, refresh, setRefresh }: Props) {
 
   return (
     <div
-      className={`w-full border rounded-2xl relative
-        ${isRedZone ? "bg-red-100" : "bg-secondary-light-blue"}`}
+      className={`w-full border border-secondary-blue rounded-2xl relative bg-primary-milk`}
     >
       <button
         className={`absolute -bottom-1 -right-1 p-1 rounded-full bg-gray-500 text-primary-milk
@@ -48,16 +55,25 @@ export default function ActionCard({ act, refresh, setRefresh }: Props) {
         <AiFillDelete />
       </button>
       <div
-        className={`flex justify-between items-center text-primary-milk p-3 
-          ${isRedZone ? "bg-accent-red" : "bg-secondary-blue"} rounded-t-2xl`}
+        className={`flex justify-between items-center text-primary-milk p-3 bg-secondary-blue rounded-t-2xl`}
       >
         <div className="flex gap-2 items-center">
           <strong>{act.time.substring(0, 5)}</strong>
           <strong>{act.record_type}</strong>
         </div>
-        {act.record_type === "Приём пищи" && <GiHotMeal size={20}/>}
-        {act.record_type === "Инъекция инсулина" && <GiLoveInjection size={20}/>}
-        {act.record_type === "Измерение глюкозы" && <LiaThermometerSolid size={20}/>}
+        <div
+          className={
+            `w-7 h-7 rounded-full flex justify-center items-center 
+            ${iconBg === "red" ? "bg-accent-red text-primary-milk" 
+              : iconBg === "yellow" ? "bg-accent-yellow text-secondary-blue" 
+              : iconBg === "green" ? "bg-green-500 text-primary-milk" 
+              : iconBg === "default" ? "bg-primary-milk text-secondary-blue" : ""}`
+            }
+        >
+          {act.record_type === "Приём пищи" && <GiHotMeal />}
+          {act.record_type === "Инъекция инсулина" && <GiLoveInjection />}
+          {act.record_type === "Измерение глюкозы" && <LiaThermometerSolid />}
+        </div>
       </div>
       <div className="p-3 rounded-b-2xl flex flex-col">
         {act.record_type === "Приём пищи" && (

@@ -5,6 +5,7 @@ import { DailyRecords } from "@/lib/types";
 import ActionCard from "../UI/action-card";
 import Loading from "../loading";
 import SearchPeriod from "../forms/search-period";
+import { font_headline } from "@/lib/fonts";
 
 interface Props {
   userId: number;
@@ -47,12 +48,12 @@ export function ActionList({ userId, begin, end }:Props) {
         setEndDate={setEndDate}
       />
       {isLoading && <Loading />}
-      <div className="w-full lg:w-1/2 flex flex-col gap-7 mt-7">
+      <div className="w-full lg:w-1/2 flex flex-col gap-10 mt-10">
         {actions.length === 0 && !isLoading && <p className="text-gray-500">В указанный период записей нет...</p>}
         {actions.length > 0 &&
           actions.map((item, index) => (
             <div key={index} className="w-full">
-              <strong className="text-lg font-extrabold">{new Date(item.date).toLocaleDateString('ru-RU')}</strong>
+              <strong className={`${font_headline.className} text-2xl`}>{new Date(item.date).toLocaleDateString('ru-RU')}</strong>
               <div className="border"></div>
               <div className="w-full flex flex-col gap-5 mt-5">
                 {item.daily_records.map((record, index) => (

@@ -122,7 +122,7 @@ export default function FoodIntakeForm({ userId }: Props) {
           className="input"
         >
           {options.map((option) => (
-            <option key={option} value={option}>
+            <option key={option} value={option} className="rounded-2xl">
               {option}
             </option>
           ))}
