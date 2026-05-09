@@ -16,7 +16,7 @@ export default async function RegisterPage() {
   return (
     <main
       aria-label="вход"
-      className={`flex flex-col w-full py-10`}
+      className={`flex flex-col w-full py-15`}
     >
       <Headline text="Вход" />
       <div className="w-full x-spacing">

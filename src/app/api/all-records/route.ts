@@ -20,6 +20,7 @@ export async function GET (request: NextRequest) {
           'bread_units', bread_units,
           'comment', comment
         )
+        ORDER BY time ASC
       ) AS daily_records FROM (
         SELECT
           'Приём пищи' AS record_type,
@@ -59,10 +60,9 @@ export async function GET (request: NextRequest) {
           comment
         FROM glucose_measurements
         WHERE user_id = $1 AND date >= $2 AND date <= $3
-        ORDER BY time
         ) AS all_records
       GROUP BY date
-      ORDER BY date;
+      ORDER BY date ASC;
       `, [Number(userId), startDate, endDate]
     );
     return NextResponse.json({data: result.rows, status: 200});
